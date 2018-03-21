@@ -1,2 +1,2 @@
 # GAC
-Get an ascii character by lookip it up by name
+Get an ascii character by looking it up by a list of known names 
