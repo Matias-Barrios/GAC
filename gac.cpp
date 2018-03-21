@@ -13,6 +13,7 @@ using namespace std;
 
 
 void Error(int code) {
+    
     if ( code == 2 ) {
          cout << "Error! This application only accepts a single argument!!" << endl;
          exit(code);
@@ -26,19 +27,19 @@ void Error(int code) {
 bool lookupTerm(const std::string& term, const std::vector<std::string>& possible_names) {
     for (const std::string &possible_name : possible_names)
     {
-        cout << "possible_name  : " << possible_name << endl;
-        cout << "term  : " << term << endl;
-        if (possible_name == term)
+        if (possible_name.compare(term) == 0)
             return true;
     }
     return false;
 }
 void searchTerm(string term) {
+    bool values_found = false;
     if ( lookupTerm(term,possible_tilde) ) {
         cout << possible_tilde_message << endl;
-        Error(0);
+        values_found = true;
     }
-    Error(3);
+    if ( values_found == false )
+        Error(3);
 }
 
 int main(int argc, char *argv[]) {
