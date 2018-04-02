@@ -61,9 +61,7 @@ bool lookupTerm(const std::string& term, const std::vector<std::string>& possibl
     for (const std::string &possible_name : possible_names)
     {
        
-        cout << "Possible name : " << possible_name << endl;
-        cout << "term : " << lower << endl;
-        if (possible_name.compare(lower) == 0 || regex_match(lower, regex(possible_name)) || regex_match(possible_name, regex(lower)) )
+        if (possible_name.compare(lower) == 0 || regex_match(lower, regex(".*" + possible_name + ".*")) || regex_match(possible_name, regex(".*" + lower + ".*")) )
             return true;
     }
     return false;
