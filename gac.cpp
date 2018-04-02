@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>   
+#include <regex>
 
 
 using namespace std;
@@ -10,35 +11,35 @@ using namespace std;
 
 
 //  Character : !
-    const std::vector<std::string> possible_exclmark = { "exclamation", "exclamation symbol" , "exclamation mark"};
+    const std::vector<std::string> possible_exclmark = { "exclamation", "symbol" , "mark"};
     const string possible_exclmark_message = "! | 33";
 //  ***********************
 //  Character : "
-    const std::vector<std::string> possible_exclmark = { "double quotation", "double quotation marks" , "double quotes"};
-    const string possible_exclmark_message = "\" | 34";
+    const std::vector<std::string> possible_doubleq = { "double", "quotation" , "marks", "mark", "quotes"};
+    const string possible_doubleq_message = "\" | 34";
 //  ***********************
 //  Character : #
-    const std::vector<std::string> possible_hash = { "number sign", "hash" , "pound" , "double quotes"};
-    const string possible_exclmark_message = "# | 35";
+    const std::vector<std::string> possible_hash = { "number", "hash" , "pound" , "sign"};
+    const string possible_hash_message = "# | 35";
 //  ***********************
 //  Character : $
-    const std::vector<std::string> possible_dollar = { "dollar", "dollar symbol", "dollar sign" };
-    const string possible_exclmark_message = "$ | 36";
+    const std::vector<std::string> possible_dollar = { "dollar", "symbol", "sign" };
+    const string possible_dollar_message = "$ | 36";
 //  ***********************
 //  Character : %
-    const std::vector<std::string> possible_percent = { "percent", "percent symbol", "percent sign" , "percentage" };
-    const string possible_exclmark_message = "% | 37";
+    const std::vector<std::string> possible_percent = { "percent", "symbol", "sign" , "percentage" };
+    const string possible_percent_message = "% | 37";
 //  ***********************
 //  Character : &
-    const std::vector<std::string> possible_ampersand = { "percent", "percent symbol", "percent sign" , "percentage" };
-    const string possible_exclmark_message = "& | 38";
+    const std::vector<std::string> possible_ampersand = { "ampersand", "and" };
+    const string possible_ampersand_message = "& | 38";
 //  ***********************
 //  Character : '
-    const std::vector<std::string> possible_exclmark = { "apostrophe", "single quote", "single quotation"  };
-    const string possible_exclmark_message = "' | 39";
+    const std::vector<std::string> possible_singleq = { "apostrophe", "single", "quote", "quotation"  };
+    const string possible_singleq_message = "' | 39";
 //  ***********************
 //  Character : ~
-    const std::vector<std::string> possible_tilde = { "tilde", "swung dash" , "ñoqui"};
+    const std::vector<std::string> possible_tilde = { "tilde", "dash" , "swung" , "ñoqui"};
     const string possible_tilde_message = "~ | 126";
 //  ***********************
 
@@ -59,13 +60,24 @@ bool lookupTerm(const std::string& term, const std::vector<std::string>& possibl
     transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
     for (const std::string &possible_name : possible_names)
     {
-        if (possible_name.compare(lower) == 0)
+       
+        cout << "Possible name : " << possible_name << endl;
+        cout << "term : " << lower << endl;
+        if (possible_name.compare(lower) == 0 || regex_match(lower, regex(possible_name)) || regex_match(possible_name, regex(lower)) )
             return true;
     }
     return false;
 }
 void searchTerm(string term) {
     bool one_found = false;
+    if ( lookupTerm(term,possible_exclmark) ) {
+        cout << possible_exclmark_message << endl;
+        one_found = true;
+    }
+    if ( lookupTerm(term,possible_doubleq) ) {
+        cout << possible_doubleq_message << endl;
+        one_found = true;
+    }
     if ( lookupTerm(term,possible_tilde) ) {
         cout << possible_tilde_message << endl;
         one_found = true;
